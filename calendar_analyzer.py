@@ -58,6 +58,8 @@ def write_csv(calendar_details):
 
 def quickview(calendar_details):
 
+    '''Takes in user input for the number of rows and then returns a customized table of significant information from the calendar'''
+
     num_rows = int(input("How many rows? "))
 
     quickview = etl.cut(calendar_details, 0, "Start_Date", "Length_of_Time")
@@ -187,7 +189,7 @@ def parsing_func():
     
     parser.add_argument('-q', '--quickview',
                         required=False,
-                        help='Prints the first 50 rows of a customized table for quick review')
+                        help='Prints the number rows of a customized table for quick review')
     
     args = parser.parse_args()
     return args
