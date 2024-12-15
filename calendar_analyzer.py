@@ -45,7 +45,7 @@ def read_csv():
 
     '''Creates a petl table abstraction from the csv'''
 
-    calendar_details = etl.io.csv.fromcsv('/Users/ralphcorey/Desktop/Programming Work/calendar_analyzer/' + sys.argv[2])
+    calendar_details = etl.io.csv.fromcsv('/Users/ralphcorey/outlook_analyzer/' + sys.argv[2])
     return calendar_details
 
 def write_csv(calendar_details):
