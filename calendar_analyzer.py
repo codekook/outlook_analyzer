@@ -8,7 +8,7 @@ def main():
 
     if args_main.quickview:
         calendar_details = api.read_csv()
-        api.quickview(calendar_details)
+        print(api.quickview(calendar_details))
 
     if args_main.nrows:
         calendar_details = api.read_csv()

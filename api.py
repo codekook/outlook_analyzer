@@ -32,8 +32,9 @@ def quickview(calendar_details):
 
     num_rows = int(input("How many rows? "))
 
-    quickview = etl.cut(calendar_details, 0, "Start_Date", "Length_of_Time")
-    print(quickview.look(num_rows))
+    quickview = etl.cut(calendar_details, "\ufeffSubject", "Start_Date", "Length_of_Time")
+    
+    return quickview.look(num_rows)
 
 def append_csv(new_calendar_details):
 

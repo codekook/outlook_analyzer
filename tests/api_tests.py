@@ -1,26 +1,31 @@
 import pytest
 import api
-import petl as etl  
+import petl as etl
+import os
+from unittest.mock import patch 
+from dotenv import load_dotenv   
+ 
+def test_modify_table_columns(og_csv):
+    modified_table_columns = api.modify_table_columns(og_csv)
+    assert etl.header(modified_table_columns) == ("\ufeffSubject","Start_Date","Start_Time","End_Date","End_Time","All day event","Reminder Date","Reminder Time","Meeting Organizer","Required Attendees","Optional Attendees","Meeting Resources","Billing Information","Categories","Description","Location")
 
-#these two tests require a different fixture with an unchanged file to work on 
-def test_modify_table_columns():
-    #assert column headers were renamed
-    #assert Start_Date and Start_Time in a given row is formatted to datetime format
-    pass
-
-def test_add_remove_columns():
-    #assert the total columns is equal to XX
-    pass
+def test_add_remove_columns(og_csv):
+    modified = api.modify_table_columns(og_csv)
+    added_removed_columns = api.add_remove_columns(modified)
+    assert etl.header(added_removed_columns) == ("\ufeffSubject","Start_Date","Start_Time","End_Date","End_Time","All day event","Reminder Date","Reminder Time","Meeting Organizer","Required Attendees","Categories","Description","Location", "Month", "Length_of_Time")
 
 def test_count_rows(calendar_details):
     rows = api.count_rows(calendar_details)
     assert rows == f'file rows: {489}'
 
 def test_quickview(calendar_details):
-    quickview = etl.cut(calendar_details, 0, "Start_Date", "Length_of_Time")
-    headers = etl.header(quickview)
-    assert len(headers) == 3
-    assert headers == ("\ufeffSubject", "Start_Date", "Length_of_Time")
+    with patch('builtins.input', return_value=5):
+        quickview_test = api.quickview(calendar_details)
+    assert quickview_test
+
+def test_time_stats(calendar_details):
+    stats = etl.stats(calendar_details, "Length_of_Time")
+    assert stats[0] == 489 
 
 
 
