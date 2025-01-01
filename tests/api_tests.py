@@ -3,16 +3,25 @@ import api
 import petl as etl
 import os
 from unittest.mock import patch 
-from dotenv import load_dotenv   
- 
+from dotenv import load_dotenv
+from datetime import datetime   
+
 def test_modify_table_columns(og_csv):
     modified_table_columns = api.modify_table_columns(og_csv)
     assert etl.header(modified_table_columns) == ("\ufeffSubject","Start_Date","Start_Time","End_Date","End_Time","All day event","Reminder Date","Reminder Time","Meeting Organizer","Required Attendees","Optional Attendees","Meeting Resources","Billing Information","Categories","Description","Location")
+
+    check_start_date = etl.data(modified_table_columns)
+    start_date = list(check_start_date)
+    assert type(start_date[1][1]) is type(datetime.today())
 
 def test_add_remove_columns(og_csv):
     modified = api.modify_table_columns(og_csv)
     added_removed_columns = api.add_remove_columns(modified)
     assert etl.header(added_removed_columns) == ("\ufeffSubject","Start_Date","Start_Time","End_Date","End_Time","All day event","Reminder Date","Reminder Time","Meeting Organizer","Required Attendees","Categories","Description","Location", "Month", "Length_of_Time")
+
+    check_time = etl.data(added_removed_columns)
+    length_of_time = list(check_time)
+    assert type(length_of_time[1][14]) is type(0.0)
 
 def test_count_rows(calendar_details):
     rows = api.count_rows(calendar_details)
