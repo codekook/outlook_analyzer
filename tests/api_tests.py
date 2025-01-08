@@ -1,9 +1,6 @@
-import pytest
 import api
 import petl as etl
-import os
 from unittest.mock import patch 
-from dotenv import load_dotenv
 from datetime import datetime   
 
 def test_modify_table_columns(og_csv):

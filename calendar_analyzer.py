@@ -1,10 +1,10 @@
 import api
-from cli import parsing_func
+import cli
 
 def main():
 
-    args_main = parsing_func()
-    print('argparse arguments: ', args_main)
+    args_main = cli.parsing_func()
+    #print('argparse arguments: ', args_main)
 
     if args_main.quickview:
         calendar_details = api.read_csv()

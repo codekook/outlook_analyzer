@@ -22,7 +22,11 @@ def write_csv(calendar_details):
 
     '''Writes the petl table abstraction to a new csv file'''
 
-    with open('/Users/ralphcorey/Desktop/Programming Work/calendar_analyzer/calendar_details.csv', 'w', newline='') as calendar:
+    load_dotenv()
+    route = os.getenv('ROUTE')
+    new_route = route + 'calendar_details.csv'
+
+    with open(new_route, 'w', newline='') as calendar:
         writer = csv.writer(calendar)
         writer.writerows(calendar_details)
 
@@ -33,14 +37,18 @@ def quickview(calendar_details):
     num_rows = int(input("How many rows? "))
 
     quickview = etl.cut(calendar_details, "\ufeffSubject", "Start_Date", "Length_of_Time")
-    
+
     return quickview.look(num_rows)
 
 def append_csv(new_calendar_details):
 
-    '''Performs the same updates as modify table column and ppends a new file to the existing dataset'''
+    '''Performs the same updates as modify table column and appends a new file to the existing dataset'''
 
-    appendcsv(new_calendar_details, '/Users/ralphcorey/Desktop/Programming Work/calendar_analyzer/calendar_details.csv') 
+    load_dotenv()
+    route = os.getenv('ROUTE')
+    new_route = route + 'calendar_details.csv'
+
+    appendcsv(new_calendar_details, new_route) 
 
 def count_rows(calendar_details):
 
