@@ -1,7 +1,6 @@
 import pytest
 import os
 import petl as etl 
-import cli
 from dotenv import load_dotenv
 
 @pytest.fixture()
@@ -21,11 +20,5 @@ def og_csv():
     load_dotenv()
     og_csv_file = os.getenv('TEST_OG_CSV')
     return etl.io.csv.fromcsv(og_csv_file)
-
-@pytest.fixture()
-def argument_parser(monkeypatch):
-    monkeypatch.setattr("sys.argv", ["calendar_analyzer.py", "-s", "calendar_details.csv"])
-    parser = cli.parsing_func()
-    return parser.time_stats
 
 
