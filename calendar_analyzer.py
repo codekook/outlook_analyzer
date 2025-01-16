@@ -17,8 +17,8 @@ def main():
     if args_main.new_calendar:
         calendar_details = api.read_csv()
         modified_columns = api.modify_table_columns(calendar_details)
-        updated_table = api.add_remove_columns(modified_columns)
-        api.append_csv(updated_table)
+        new_calendar_details = api.add_remove_columns(modified_columns)
+        api.append_csv(new_calendar_details)
 
     if args_main.modify_table_columns:
         calendar_details = api.read_csv()

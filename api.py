@@ -5,7 +5,6 @@ import os
 import petl as etl
 import plotly.express as px
 from dotenv import load_dotenv
-from petl import appendcsv
 from datetime import datetime
 
 def read_csv():
@@ -24,11 +23,18 @@ def write_csv(calendar_details):
 
     load_dotenv()
     route = os.getenv('ROUTE')
-    new_route = route + 'calendar_details.csv'
+    new_route = route + 'new_calendar_details.csv'
 
-    with open(new_route, 'w', newline='') as calendar:
-        writer = csv.writer(calendar)
-        writer.writerows(calendar_details)
+    etl.io.csv.tocsv(calendar_details, new_route)
+
+def append_csv(new_calendar_details):
+
+    '''Appends a new file to the existing dataset.  Note: all the changes to the table are made by the new_calendar argument in the main() function.'''
+
+    load_dotenv()
+    route = os.getenv('ROUTE')
+    new_route = route + 'calendar_details.csv'
+    etl.appendcsv(new_calendar_details, new_route) 
 
 def quickview(calendar_details):
 
@@ -40,15 +46,6 @@ def quickview(calendar_details):
 
     return quickview.look(num_rows)
 
-def append_csv(new_calendar_details):
-
-    '''Performs the same updates as modify table column and appends a new file to the existing dataset'''
-
-    load_dotenv()
-    route = os.getenv('ROUTE')
-    new_route = route + 'calendar_details.csv'
-
-    appendcsv(new_calendar_details, new_route) 
 
 def count_rows(calendar_details):
 

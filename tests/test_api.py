@@ -3,6 +3,15 @@ import petl as etl
 from unittest.mock import patch 
 from datetime import datetime   
 
+def test_read_csv(monkeypatch):
+
+    """Test the api's ability to open a csv and create a petl table abstraction"""
+
+    monkeypatch.setattr("sys.argv", ["sys argument 0", "sys argument 1", "calendar_details.csv"])
+    test_calendar_details = api.read_csv()
+    assert test_calendar_details
+    assert etl.header(test_calendar_details) == ("\ufeffSubject","Start_Date","Start_Time","End_Date","End_Time","All day event","Reminder Date","Reminder Time","Meeting Organizer","Required Attendees","Categories","Description","Location","Month","Length_of_Time")
+
 def test_modify_table_columns(og_csv):
 
     """Test the api's ability to modify the table columns to rename the column headers for Start Date, Start Time, End Date and End Time.  Also tests that the element in the first row of the Start_Date column is stored as datetime object."""
@@ -20,7 +29,7 @@ def test_add_remove_columns(og_csv):
 
     modified = api.modify_table_columns(og_csv)
     added_removed_columns = api.add_remove_columns(modified)
-    assert etl.header(added_removed_columns) == ("\ufeffSubject","Start_Date","Start_Time","End_Date","End_Time","All day event","Reminder Date","Reminder Time","Meeting Organizer","Required Attendees","Categories","Description","Location", "Month", "Length_of_Time")
+    assert etl.header(added_removed_columns) == ("\ufeffSubject","Start_Date","Start_Time","End_Date","End_Time","All day event","Reminder Date","Reminder Time","Meeting Organizer","Required Attendees","Categories","Description","Location","Month","Length_of_Time")
 
     check_time = etl.data(added_removed_columns)
     length_of_time = list(check_time)
