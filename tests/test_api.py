@@ -1,3 +1,4 @@
+import pytest 
 import api
 import petl as etl
 from unittest.mock import patch 
@@ -11,6 +12,14 @@ def test_read_csv(monkeypatch):
     test_calendar_details = api.read_csv()
     assert test_calendar_details
     assert etl.header(test_calendar_details) == ("\ufeffSubject","Start_Date","Start_Time","End_Date","End_Time","All day event","Reminder Date","Reminder Time","Meeting Organizer","Required Attendees","Categories","Description","Location","Month","Length_of_Time")
+
+@pytest.mark.skip()
+def test_write_csv(calendar_details):
+
+    #keep in mind you're trying to mock the write method.  Page 141 of python testing book.
+    with patch.object(calendar_details, 'calendar_details') as mock_calendar_details:
+        csv = api.write_csv(mock_calendar_details)
+    assert csv
 
 def test_modify_table_columns(og_csv):
 

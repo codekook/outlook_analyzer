@@ -46,7 +46,6 @@ def quickview(calendar_details):
 
     return quickview.look(num_rows)
 
-
 def count_rows(calendar_details):
 
     '''Counts the total rows in the calendar table'''
